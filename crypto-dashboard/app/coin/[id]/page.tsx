@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Header from "@/components/Header";
 import { getCoinDetails } from "@/lib/api";
 import { formatCurrency, formatLargeNumber } from "@/lib/format";
