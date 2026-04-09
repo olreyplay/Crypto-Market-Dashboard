@@ -10,3 +10,15 @@ export async function getTopCoins() {
 
   return res.json();
 }
+
+export async function getCoinDetails(id: string) {
+  const res = await fetch(`https://api.coingecko.com/api/v3/coins/${id}`, {
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch coin details");
+  }
+
+  return res.json();
+}
