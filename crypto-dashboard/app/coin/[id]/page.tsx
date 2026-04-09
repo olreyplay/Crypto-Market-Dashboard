@@ -54,6 +54,27 @@ export default async function CoinPage({
                 {coin.market_data.price_change_percentage_24h.toFixed(2)}%
               </p>
             </div>
+
+            <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-4">
+              <p className="mb-1 text-sm text-neutral-400">24h High</p>
+              <p className="text-lg font-semibold">
+                {formatCurrency(coin.market_data.high_24h.usd)}
+              </p>
+            </div>
+
+            <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-4">
+              <p className="mb-1 text-sm text-neutral-400">24h Low</p>
+              <p className="text-lg font-semibold">
+                {formatCurrency(coin.market_data.low_24h.usd)}
+              </p>
+            </div>
+
+            <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-4">
+              <p className="mb-1 text-sm text-neutral-400">Total Volume</p>
+              <p className="text-lg font-semibold">
+                {formatLargeNumber(coin.market_data.total_volume.usd)}
+              </p>
+            </div>
           </div>
 
           <div className="mt-6 rounded-xl border border-neutral-800 bg-neutral-950 p-4">
