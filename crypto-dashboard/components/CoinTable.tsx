@@ -1,17 +1,33 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import SearchBar from "./SearchBar";
 import { formatCurrency, formatLargeNumber } from "@/lib/format";
 
 export default function CoinTable({ coins }: { coins: any[] }) {
   const [query, setQuery] = useState("");
+  const router = useRouter();
 
   const filtered = coins.filter(
     (coin) =>
       coin.name.toLowerCase().includes(query.toLowerCase()) ||
       coin.symbol.toLowerCase().includes(query.toLowerCase()),
   );
+
+  function handleRowClick(id: string) {
+    router.push(`/coin/${id}`);
+  }
+
+  function handleRowKeyDown(
+    event: React.KeyboardEvent<HTMLTableRowElement>,
+    id: string,
+  ) {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      router.push(`/coin/${id}`);
+    }
+  }
 
   return (
     <div>
@@ -35,7 +51,11 @@ export default function CoinTable({ coins }: { coins: any[] }) {
               filtered.map((coin) => (
                 <tr
                   key={coin.id}
-                  className="border-t border-neutral-800 transition hover:bg-neutral-900"
+                  tabIndex={0}
+                  role="button"
+                  onClick={() => handleRowClick(coin.id)}
+                  onKeyDown={(event) => handleRowKeyDown(event, coin.id)}
+                  className="cursor-pointer border-t border-neutral-800 transition hover:bg-neutral-900 focus:outline-none focus:bg-neutral-900"
                 >
                   <td className="px-4 py-4">
                     <div className="flex items-center gap-3">
@@ -44,6 +64,7 @@ export default function CoinTable({ coins }: { coins: any[] }) {
                         alt={coin.name}
                         className="h-8 w-8"
                       />
+
                       <div>
                         <p className="font-medium text-white">{coin.name}</p>
                         <p className="text-xs uppercase text-neutral-400">
@@ -78,7 +99,7 @@ export default function CoinTable({ coins }: { coins: any[] }) {
                   colSpan={4}
                   className="px-4 py-10 text-center text-neutral-400"
                 >
-                  <p className="text-base text-white mb-1">No coins found</p>
+                  <p className="mb-1 text-base text-white">No coins found</p>
                   <p className="text-sm text-neutral-400">
                     Try a different name or symbol.
                   </p>
