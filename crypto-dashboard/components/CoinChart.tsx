@@ -11,7 +11,7 @@ import {
 
 export default function CoinChart({ data }: { data: any[] }) {
   return (
-    <div className="h-64 w-full">
+    <div className="w-full h-75">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data}>
           <XAxis dataKey="date" hide />
