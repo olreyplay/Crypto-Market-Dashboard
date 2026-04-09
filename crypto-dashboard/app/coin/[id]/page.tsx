@@ -1,6 +1,8 @@
 import Header from "@/components/Header";
 import { getCoinDetails } from "@/lib/api";
 import { formatCurrency, formatLargeNumber } from "@/lib/format";
+import CoinChart from "@/components/CoinChart";
+import { getCoinChart } from "@/lib/api";
 
 export default async function CoinPage({
   params,
@@ -9,6 +11,8 @@ export default async function CoinPage({
 }) {
   const { id } = await params;
   const coin = await getCoinDetails(id);
+
+  const chartData = await getCoinChart(id);
 
   return (
     <main className="min-h-screen bg-neutral-950 text-white">
@@ -85,6 +89,12 @@ export default async function CoinPage({
                 : "No description available."}
             </p>
           </div>
+        </div>
+
+        <div className="mt-6 rounded-xl border border-neutral-800 bg-neutral-950 p-4">
+          <h3 className="mb-4 text-lg font-semibold">7 Day Price</h3>
+
+          <CoinChart data={chartData} />
         </div>
       </section>
     </main>
