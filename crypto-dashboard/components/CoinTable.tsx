@@ -31,42 +31,60 @@ export default function CoinTable({ coins }: { coins: any[] }) {
           </thead>
 
           <tbody>
-            {filtered.map((coin) => (
-              <tr
-                key={coin.id}
-                className="border-t border-neutral-800 hover:bg-neutral-900 transition"
-              >
-                <td className="px-4 py-4">
-                  <div className="flex items-center gap-3">
-                    <img src={coin.image} className="w-8 h-8" />
-                    <div>
-                      <p className="text-white font-medium">{coin.name}</p>
-                      <p className="text-xs text-neutral-400 uppercase">
-                        {coin.symbol}
-                      </p>
-                    </div>
-                  </div>
-                </td>
-
-                <td className="px-4 py-4">
-                  {formatCurrency(coin.current_price)}
-                </td>
-
-                <td
-                  className={`px-4 py-4 ${
-                    coin.price_change_percentage_24h >= 0
-                      ? "text-green-400"
-                      : "text-red-400"
-                  }`}
+            {filtered.length > 0 ? (
+              filtered.map((coin) => (
+                <tr
+                  key={coin.id}
+                  className="border-t border-neutral-800 transition hover:bg-neutral-900"
                 >
-                  {coin.price_change_percentage_24h.toFixed(2)}%
-                </td>
+                  <td className="px-4 py-4">
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={coin.image}
+                        alt={coin.name}
+                        className="h-8 w-8"
+                      />
+                      <div>
+                        <p className="font-medium text-white">{coin.name}</p>
+                        <p className="text-xs uppercase text-neutral-400">
+                          {coin.symbol}
+                        </p>
+                      </div>
+                    </div>
+                  </td>
 
-                <td className="px-4 py-4 text-neutral-300">
-                  {formatLargeNumber(coin.market_cap)}
+                  <td className="px-4 py-4">
+                    {formatCurrency(coin.current_price)}
+                  </td>
+
+                  <td
+                    className={`px-4 py-4 font-medium ${
+                      coin.price_change_percentage_24h >= 0
+                        ? "text-green-400"
+                        : "text-red-400"
+                    }`}
+                  >
+                    {coin.price_change_percentage_24h.toFixed(2)}%
+                  </td>
+
+                  <td className="px-4 py-4 text-neutral-300">
+                    {formatLargeNumber(coin.market_cap)}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td
+                  colSpan={4}
+                  className="px-4 py-10 text-center text-neutral-400"
+                >
+                  <p className="text-base text-white mb-1">No coins found</p>
+                  <p className="text-sm text-neutral-400">
+                    Try a different name or symbol.
+                  </p>
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
